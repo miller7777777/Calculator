@@ -1,14 +1,11 @@
-import listeners.ClearListener;
-import listeners.DigitListener;
-import listeners.WorkListener;
+package com;
+
+import com.listeners.ClearListener;
+import com.listeners.DigitListener;
+import com.listeners.WorkListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.print.Book;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by mille_000 on 12.12.2014.
@@ -21,7 +18,7 @@ public class Calculator {
 
 
     public static void main(String[] args) {
-//      new Calculator().build();
+//      new com.Calculator().build();
 
         Calculator c = new Calculator();
         c.build();
@@ -50,7 +47,7 @@ public class Calculator {
         JPanel digitPanel = new JPanel(new GridLayout(4, 3));
         JPanel workPanel = new JPanel(new GridLayout(4, 1));
         JPanel controlPanel = new JPanel(new GridLayout(1, 3));
-        JFrame frame = new JFrame("Calculator");
+        JFrame frame = new JFrame("com.Calculator");
         frame.setLayout(new BorderLayout());
         JButton clearButton;
         JButton backspaceButton;
@@ -58,6 +55,12 @@ public class Calculator {
         JButton dotButton;
         JButton changeSignumButton;
         JTextArea indikator;
+        JPanel memoryPanel;
+        JButton memoryClearButton;
+        JButton memoryRemButton;
+        JButton memorySetButton;
+        JButton memoryPlusButton;
+        JButton memoryMinusButton;
 
         String[] keyValue = {"7", "8", "9", "4", "5", "6", "1", "2", "3", "0"};
         String[] workValue = {"/", "X", "-", "+"};
@@ -117,6 +120,30 @@ public class Calculator {
         JPanel indicatorPanel = new JPanel();
         indicatorPanel.add(indikator);
 
+        memoryPanel = new JPanel(new GridLayout(5, 1));
+
+        memoryClearButton = new JButton();
+        setJButton(memoryClearButton, "MC", font, Color.blue, Color.green);
+
+        memoryRemButton = new JButton();
+        setJButton(memoryRemButton, "MR", font, Color.blue, Color.green);
+
+        memorySetButton = new JButton();
+        setJButton(memorySetButton, "MS", font, Color.blue, Color.green);
+
+        memoryPlusButton = new JButton();
+        setJButton(memoryPlusButton, "M+", font, Color.blue, Color.green);
+
+        memoryMinusButton = new JButton();
+        setJButton(memoryMinusButton, "M-", font, Color.blue, Color.green);
+
+        memoryPanel.add(memoryClearButton);
+        memoryPanel.add(memoryRemButton);
+        memoryPanel.add(memorySetButton);
+        memoryPanel.add(memoryPlusButton);
+        memoryPanel.add(memoryMinusButton);
+
+
         clearButton = new JButton("C");
         clearButton.setFont(font);
         clearButton.setBackground(Color.gray);
@@ -138,9 +165,18 @@ public class Calculator {
         frame.getContentPane().add(BorderLayout.CENTER, digitPanel);
         frame.getContentPane().add(BorderLayout.NORTH, indicatorPanel);
         frame.getContentPane().add(BorderLayout.EAST, workPanel);
+        frame.getContentPane().add(BorderLayout.WEST, memoryPanel);
         frame.getContentPane().add(BorderLayout.SOUTH, controlPanel);
         frame.setVisible(true);
 
+    }
+
+    public void setJButton(JButton button, String s, Font font, Color backgroundColor, Color foregroundcolor){
+
+        button.setText(s);
+        button.setBackground(backgroundColor);
+        button.setFont(font);
+        button.setForeground(foregroundcolor);
     }
 
     }
