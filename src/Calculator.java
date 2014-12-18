@@ -1,22 +1,51 @@
+import listeners.ClearListener;
 import listeners.DigitListener;
+import listeners.WorkListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.Book;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by mille_000 on 12.12.2014.
  */
 public class Calculator {
 
+
+
     //этот класс будет создавать экземпляр калькулятора и запускать его.
 
 
-    public void build(){
+    public static void main(String[] args) {
+//      new Calculator().build();
+
+        Calculator c = new Calculator();
+        c.build();
+
+    }
+
+
+
+
+    private void build(){
 
         JButton[] digitButtons = new JButton[10];
         JButton[] workButtons = new JButton[4];
+//        JButton plusButton = new JButton("+");
+//        JButton minusButton = new JButton("-");
+//        JButton mulButton = new JButton("X");
+//        JButton divButton = new JButton("/");
+        double firstOperand = 0.;
+        double secondOperand = 0.;
+        double result = 0.;
+
+//        Collection<T> data = new Collection<T>() {
+//        }
+
 
         JPanel digitPanel = new JPanel(new GridLayout(4, 3));
         JPanel workPanel = new JPanel(new GridLayout(4, 1));
@@ -31,7 +60,9 @@ public class Calculator {
         JTextArea indikator;
 
         String[] keyValue = {"7", "8", "9", "4", "5", "6", "1", "2", "3", "0"};
-        String[] work = {"/", "X", "-", "+"};
+        String[] workValue = {"/", "X", "-", "+"};
+
+        Boolean flag = false;
 
 
 
@@ -46,13 +77,13 @@ public class Calculator {
         Font font = new Font("Arial", Font.BOLD, 20);
         indikator.setFont(font);
 
-        indikator.setText("0");
+        indikator.setText("");
 
 
 
         for (int i = 0; i < 10; i++) {
             digitButtons[i] = new JButton(keyValue[i]);
-            digitButtons[i].addActionListener(new DigitListener(digitButtons, indikator, i, keyValue));
+            digitButtons[i].addActionListener(new DigitListener(digitButtons, indikator, i, keyValue, flag));
             digitButtons[i].setBackground(Color.darkGray);
             digitButtons[i].setForeground(Color.green);
             digitButtons[i].setFont(font);
@@ -70,12 +101,15 @@ public class Calculator {
         digitPanel.add(changeSignumButton);
 
         for (int i = 0; i < 4; i++) {
-            workButtons[i] = new JButton(work[i]);
+            workButtons[i] = new JButton(workValue[i]);
+           workButtons[i].addActionListener(new WorkListener(workButtons, indikator, i, workValue, firstOperand, secondOperand, result, flag));
             workPanel.add(workButtons[i]);
             workButtons[i].setBackground(Color.green);
             workButtons[i].setFont(font);
 
         }
+
+//        workPanel.add()
 
 
 
@@ -86,6 +120,7 @@ public class Calculator {
         clearButton = new JButton("C");
         clearButton.setFont(font);
         clearButton.setBackground(Color.gray);
+        clearButton.addActionListener(new ClearListener(this));
         backspaceButton = new JButton("<-");
         backspaceButton.setFont(font);
         backspaceButton.setBackground(Color.gray);
@@ -106,19 +141,7 @@ public class Calculator {
         frame.getContentPane().add(BorderLayout.SOUTH, controlPanel);
         frame.setVisible(true);
 
-
-
-
-
-
-
     }
-
-    public static void main(String[] args) {
-      new Calculator().build();
-
-    }
-
 
     }
 
